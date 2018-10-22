@@ -1,0 +1,131 @@
+!!!5
+%html
+  %head
+    %title The Missing NPR Podcasts
+
+    / General metadata
+    %meta{:charset => 'utf-8'}
+    %meta{:name => 'description', :content => 'Provides a podcast feed for the Morning Edition and All Things Considered NPR radio programs. Not affiliated with NPR in any way, for presonal use only.'}
+    %link{:rel => 'canonical', :href => "#{@base_url}"}
+    %link{:rel => 'icon', :href => '/images/favicon.png', :sizes => '512x512', :type => 'image/png'}
+
+    / Stuff for Facebook
+    %meta{:property => 'og:locale', :content => 'en_us'}
+    %meta{:property => 'og:title', :content => 'The Missing NPR Podcasts'}
+    %meta{:property => 'og:description', :content => 'Provides a podcast feed for the Morning Edition and All Things Considered NPR radio programs. Not affiliated with NPR in any way, for presonal use only.'}
+    %meta{:property => 'og:site_name', :content => 'The Missing NPR Podcasts'}
+    %meta{:property => 'og:url', :content => "#{@base_url}"}
+    %meta{:property => 'og:image', :content => "#{@base_url}/images/favicon.png"}
+
+    / CSS
+    %link{:rel => 'stylesheet', :href => "#{@scheme}://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/css/bootstrap.no-responsive.no-icons.min.css", :type => 'text/css'}
+    != css :app
+
+    / Google Analytics gets injected here
+  %body
+
+    / GitHub ribbon
+    %a.ribbon{:href => 'https://github.com/jetheis/MissingNPRPodcasts'}
+      %img{:src => "#{@scheme}://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png", :alt => 'Fork me on GitHub'}
+
+    %div.container
+
+      / "Hero Unit" (big grey box)
+      %div.hero-unit
+
+        %h1 The Missing NPR Podcasts
+
+        %p 
+          :markdown
+            If you're an [NPR](http://npr.org) listener who uses podcasts,
+            you've probably noticed that there are no official podcasts for the
+            [Morning Edition](http://www.npr.org/programs/morning-edition/) or
+            [All Things Considered](http://www.npr.org/programs/all-things-considered/)
+            NPR radio programs. This is due in a large part to the fact that NPR makes a lot of its money
+            from licensing these programs to its member stations (in proportion to
+            the number of viewers, which providing an official podcast could
+            decrease). NPR does, however, provide
+            [an API](http://www.npr.org/api/) that allows access to the content
+            of these programs. This site simply rearranges the output of the NPR
+            API into a format iTunes can understand. **In case it's not already
+            obvious, this site is a personal project that is not affiliated with
+            NPR in any way.**
+
+      / Text below the hero unit
+      %p
+        :markdown
+          Because this website essentially circumvents NPR's business decision
+          to encourage listeners to tune in to member stations instead of simply
+          downloading program content, if you use this site as a complete
+          replacememt for your member station, you are essentially hurting your
+          local member station's business. **Please don't do that**. This site
+          is entirely meant to provide a supplemental way to catch up on programs
+          you missed when you aren't near a computer. No matter how you use this
+          site, please remember to give to
+          [your local member station](http://www.npr.org/stations/) to make it
+          possible for these programs to stay on the air.
+      %p
+        :markdown
+          Access to data from the NPR API requires an API key. Instead of just
+          using mine and pelting NPR with requests for the same key, I've
+          designed the site to use a key for each memeber. This means you'll
+          need to [get an API key](http://www.npr.org/templates/reg/) from NPR
+          (they're free), and enter it in the field below to generate your
+          subscription links. Don't worry; the site won't store your key or use
+          it for any purpose other than making a request for program content,
+          rearranging that content (which it also won't store), and giving it
+          to you. If you'd like to see how this all works, check out
+          [the source code](https://github.com/jetheis/MissingNPRPodcasts).
+
+      %p
+        :markdown
+          Once you've got your API key, enter it below to generate your podcast
+          links. Remember to read the
+          [API terms of use](http://www.npr.org/api/apiterms.php) and make sure
+          you're using the output of the NPR API as it was intended (personal,
+          noncommercial, etc.).
+
+      %form.form-horizontal#apiForm
+
+        / API key field
+        %div.control-group
+          %label.control-label API Key:
+          %div.controls
+            %input#apiKeyField{:type => 'text', :spellcheck => 'false'}
+            %button.btn.btn-primary#apiKeyCheckButton{:type => 'button'} Validate API Key
+
+        / Hidden until after validation
+        %div.subscriptions.hidden
+
+          / Morning Edition links
+          %div.control-group
+            %label.control-label Morning Edition:
+            %div.controls
+              %a.btn.btn-success#morningEditionITunesButton Subscribe in iTunes
+              %a.btn.btn-warning#morningEditionRssButton Raw RSS
+
+          / All Things Considered links
+          %div.control-group
+            %label.control-label All Things Considered:
+            %div.controls
+              %a.btn.btn-success#allThingsConsideredITunesButton Subscribe in iTunes
+              %a.btn.btn-warning#allThingsConsideredRssButton Raw RSS
+
+          / All Things Considered links
+          %div.control-group
+            %label.control-label Weekend Edition Saturday:
+            %div.controls
+              %a.btn.btn-success#weekendSaturdayITunesButton Subscribe in iTunes
+              %a.btn.btn-warning#weekendSaturdayRssButton Raw RSS
+
+          / All Things Considered links
+          %div.control-group
+            %label.control-label Weekend Edition Sunday:
+            %div.controls
+              %a.btn.btn-success#weekendSundayITunesButton Subscribe in iTunes
+              %a.btn.btn-warning#weekendSundayRssButton Raw RSS
+
+    / JavaScript
+    %script{:src => "#{@scheme}://code.jquery.com/jquery-1.8.2.min.js"}
+      %script{:src => "#{@scheme}://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min.js"}
+    != js :app
